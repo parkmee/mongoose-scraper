@@ -6,13 +6,11 @@ const Schema = mongoose.Schema;
 
 // define article schema object
 const CommentSchema = new Schema({
-  heading: {
+  title: {
     type: String,
-    required: true
   },
   body: {
     type: String,
-    required: true
   },
   timestamp: {
     type: Date,
