@@ -15,21 +15,23 @@ app.set("view engine", "handlebars");
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
-//app.use("/public", express.static(__dirname + "/public"));
+//app.use(express.static("public"));
+app.use("/public", express.static(__dirname + "/public"));
 
 // mongoose
 const mongoose = require("mongoose");
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadline";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/test";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));
+db.once("open", () =>{
+  console.log("we're connected");
+})
+mongoose.Promise = global.Promise;
 
 // router
 require("./routes/htmlRoutes")(app);
 require("./routes/apiRoutes")(app);
-
 
 // start server
 app.listen(PORT, () => {
