@@ -1,9 +1,10 @@
+
 $("#scrape-btn").on("click", () => {
   // run scraper - retool
   console.log("starting scraper");
   $.ajax({
     method: "GET",
-    url: "/"
+    url: "/scrape"
   })
   .then(res => {
     console.log(res);
@@ -14,10 +15,34 @@ $("#scrape-btn").on("click", () => {
   })
 });
 
+// delete all articles on homepage
 $("#delete-all-btn").on("click", () => {
-  //todo - hide all articles on page
+  $.ajax({
+    method: "PUT",
+    url: "/articles/delete"
+  })
+  .then(res => {
+    console.log("deleted all");
+    location.reload();
+  });
 });
 
+// delete all saved articles
+$("#delete-all-saved-btn").on("click", () => {
+  $.ajax({
+    method: "PUT",
+    url: "/saved/delete"
+  })
+  .then(res => {
+    console.log("deleted all");
+    location.reload();
+  })
+  .catch(err => {
+    if (err) throw err;
+  });
+});
+
+// bookmark and save articles
 $(document).on("click", ".bookmark-link", function() {
   const thisId = $(this).attr("data-id");
 
@@ -40,7 +65,7 @@ $(document).on("click", ".close-btn", function() {
 
   $.ajax({
     method: "PUT",
-    url: `/article/delete/${thisId}`
+    url: `/delete/${thisId}`
   })
   .then(res => {
     console.log("deleted");

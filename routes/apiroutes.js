@@ -4,75 +4,6 @@ const db = require("../models");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
-module.exports = app => {
-  // scrape articles
-  app.get("/", (req, res) => {
-    getArticles();
-  });
-
-  // put request to save article
-  app.put("/saved/:id", (req, res) => {
-    db.Article.findOneAndUpdate(
-      { _id: req.params.id },
-      { isSaved: true }
-    )
-    .then(data => {
-      res.json(data);
-    })
-    .catch(err => {
-      if (err) throw err;
-    });
-  });
-
-  // put request to hide "deleted" articles from view
-  app.put("/article/delete/:id", (req, res) => {
-    db.Article.findOneAndUpdate(
-      { _id: req.params.id },
-      { isCleared: true }
-    )
-    .then(data => {
-      res.json(data);
-      console.log(data);
-    })
-    .catch(err => {
-      if (err) throw err;
-    });
-  });
-
-  // put request to hide "deleted" articles from view
-  app.put("/saved/:id", (req, res) => {
-    db.Article.findOneAndUpdate(
-      { _id: req.params.id },
-      { isCleared: true }
-    )
-    .then(data => {
-      res.json(data);
-      console.log(data);
-    })
-    .catch(err => {
-      if (err) throw err;
-    });
-  });
-
-  // grab a specific article by id and populate comment(s)
-  app.post("/articles/:id", (req, res) => {
-    db.Comment.create(req.body)
-      .then(dbComment => {
-        return db.Article.findOneAndUpdate(
-          { _id: req.params.id },
-          { comment: dbComment._id }, 
-          { new: true }
-        );
-      })
-      .then(dbArticle => {
-        res.json(dbArticle);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
-  
-}
 
 const getArticles = () => {
   axios.get("https://www.huffingtonpost.com/section/us-news")
@@ -112,6 +43,88 @@ const getArticles = () => {
   // if articles were successfully scraped and saved, send a message to client
   console.log("Scrape Complete");
 };
+
+module.exports = app => {
+  // scrape articles
+  app.get("/scrape", (req, res) => {
+    getArticles();
+  });
+
+  // put request to save article
+  app.put("/saved/:id", (req, res) => {
+    db.Article.findOneAndUpdate(
+      { _id: req.params.id },
+      { isSaved: true }
+    )
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
+  });
+
+  // put request to hide "deleted" articles from view
+  app.put("/delete/:id", (req, res) => {
+    db.Article.findOneAndUpdate(
+      { _id: req.params.id },
+      { isCleared: true }
+    )
+    .then(data => {
+      res.json(data);
+      console.log(data);
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
+  });
+
+  // put request to "delete" and hide all articles on home page
+  app.put("/articles/delete", (req, res) => {
+    db.Article.find({ isSaved: false })
+      .update({ isCleared: true })
+      .then(data => {
+        res.json(data);
+        console.log(data);
+      })
+      .catch(err => {
+        if (err) throw err;
+      });
+  });
+
+  // put request to "delete" and hide all saved articles
+  app.put("/saved/delete", (req, res) => {
+    db.Article.find({ isSaved: true })
+      .update({ isCleared: true })
+      .then(data => {
+        res.json(data);
+        console.log(data);
+      })
+      .catch(err => {
+        if (err) throw err;
+      });
+  });
+
+  // grab a specific article by id and populate comment(s)
+  app.post("/articles/:id", (req, res) => {
+    db.Comment.create(req.body)
+      .then(dbComment => {
+        return db.Article.findOneAndUpdate(
+          { _id: req.params.id },
+          { comment: dbComment._id }, 
+          { new: true }
+        );
+      })
+      .then(dbArticle => {
+        res.json(dbArticle);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+  
+}
+
 
 // run to test scraper
 getArticles();

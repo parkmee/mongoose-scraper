@@ -3,6 +3,7 @@ const db = require("../models");
 module.exports = app => {
   app.get("/", (req, res) => {
     db.Article.find({ isSaved: false, isCleared: false })
+      .sort({ timestamp: "desc" })
       .then(dbArticle => {
         const hbsObject = {
           articles: dbArticle
