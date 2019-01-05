@@ -90,3 +90,6 @@ const getArticles = () => {
   // if articles were successfully scraped and saved, send a message to client
   console.log("Scrape Complete");
 };
+
+// run to test scraper
+getArticles();

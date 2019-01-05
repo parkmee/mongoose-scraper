@@ -1,6 +1,15 @@
+const db = require("../models");
+
 module.exports = app => {
   app.get("/", (req, res) => {
-    res.render("index");
+    db.Article.find({})
+      .then(dbArticle => {
+        const hbsObject = {
+          articles: dbArticle
+        };
+        console.log(hbsObject);
+        res.render("index", hbsObject);
+      });
   });
 
   app.get("/saved", (req, res) => {
