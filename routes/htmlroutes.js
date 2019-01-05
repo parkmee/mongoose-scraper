@@ -2,7 +2,7 @@ const db = require("../models");
 
 module.exports = app => {
   app.get("/", (req, res) => {
-    db.Article.find({})
+    db.Article.find({ isSaved: false, isCleared: false })
       .then(dbArticle => {
         const hbsObject = {
           articles: dbArticle
@@ -12,11 +12,21 @@ module.exports = app => {
       });
   });
 
+  // get saved articles
   app.get("/saved", (req, res) => {
-    res.render("saved");
+    db.Article.find({ isSaved: true, isCleared: false })
+      .populate("comment")
+      .sort({ timestamp: "desc" })
+      .then(dbArticle => {
+        const hbsObject = {
+          articles: dbArticle
+        };
+        console.log(hbsObject);
+        res.render("saved", hbsObject);
+      });
   });
 
   app.get("*", (req, res) => {
-    
+
   })
 };

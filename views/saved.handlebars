@@ -1,0 +1,31 @@
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper blue-grey">
+      <a href="/" class="brand-logo">
+        <img src="./public/images/mongoose.png" class="logo-art"></img>
+        Mongoose
+      </a>
+      <ul id="nav-mobile" class="right hide-on-small-only">
+        <li><a href="/" title="Home"><i class="fas fa-home"></i></a></li>
+        <li><a class="scrape-btn" title="Scrape new articles"><i class="fas fa-search-plus"></i></a></li>
+        <li><a active href="saved" title="Saved articles"><i class="fas fa-bookmark"></i></a></li>
+        <li><a class="delete-all-saved-btn" title="Delete all saved articles"><i class="fas fa-trash-alt"></i></a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="fluid-container">
+  <div id="wrapper">
+    <h5 class="page-title text-center">Bookmarked Articles</h5>
+      <div id="articles">
+        <div class="row m-2">
+        {{#each articles}}
+          {{> saved-view}}
+        {{/each}}
+        </div>
+      </div>
+      <div id="comments"></div>
+    </div>
+</div>
+

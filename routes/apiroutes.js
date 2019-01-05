@@ -6,33 +6,55 @@ const axios = require("axios");
 
 module.exports = app => {
   // scrape articles
-  app.get("/articles/scrape", (req, res) => {
+  app.get("/", (req, res) => {
     getArticles();
   });
 
-  // get all articles
-  app.get("/articles", (req, res) => {
-    db.Article.find({})
-      .then(dbArticle => {
-        res.json(dbArticle);
-      })
-      .catch(err => {
-        res.json(err);
-      });
+  // put request to save article
+  app.put("/saved/:id", (req, res) => {
+    db.Article.findOneAndUpdate(
+      { _id: req.params.id },
+      { isSaved: true }
+    )
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
+  });
+
+  // put request to hide "deleted" articles from view
+  app.put("/article/delete/:id", (req, res) => {
+    db.Article.findOneAndUpdate(
+      { _id: req.params.id },
+      { isCleared: true }
+    )
+    .then(data => {
+      res.json(data);
+      console.log(data);
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
+  });
+
+  // put request to hide "deleted" articles from view
+  app.put("/saved/:id", (req, res) => {
+    db.Article.findOneAndUpdate(
+      { _id: req.params.id },
+      { isCleared: true }
+    )
+    .then(data => {
+      res.json(data);
+      console.log(data);
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
   });
 
   // grab a specific article by id and populate comment(s)
-  app.get("/articles/:id", (req, res) => {
-    db.Article.findOne({ _id: req.params.id })
-      .populate("comment")
-      .then(dbArticle => {
-        res.json(dbArticle);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
-
   app.post("/articles/:id", (req, res) => {
     db.Comment.create(req.body)
       .then(dbComment => {

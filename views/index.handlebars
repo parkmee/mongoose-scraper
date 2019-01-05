@@ -6,10 +6,10 @@
         Mongoose
       </a>
       <ul id="nav-mobile" class="right hide-on-small-only">
-        <li><a href="/" title="home"><i class="fas fa-home"></i></a></li>
-        <li><a class="scrape-btn" title="Scrape new articles"><i class="fas fa-search-plus"></i></a></li>
+        <li><a active href="/" title="Home"><i class="fas fa-home"></i></a></li>
+        <li><a id="scrape-btn" title="Scrape new articles"><i class="fas fa-search-plus"></i></a></li>
         <li><a href="saved" title="Saved articles"><i class="fas fa-bookmark"></i></a></li>
-        <li><a class="delete-all-btn" title="Delete all"><i class="fas fa-trash-alt"></i></a></li>
+        <li><a id="delete-all-btn" title="Clear all"><i class="fas fa-trash-alt"></i></a></li>
       </ul>
     </div>
   </nav>
@@ -17,19 +17,11 @@
 
 <div class="fluid-container">
   <div id="wrapper">
-      <div id="articles">
-        <div class="row m-2">
-
-        {{#each articles}}
-          {{#if saved}}
-            {{> saved-view}}
-          {{else}}
-            {{> general-view}}
-          {{/if}}
-        {{/each}}
-        </div>
-      </div>
-      <div id="notes"></div>
+    <h5 class="page-title text-center">Scraped Articles</h5>
+    <div id="articles" class="row m-2">
+      {{#each articles}}
+      {{> general-view}}
+      {{/each}}
     </div>
+  </div>
 </div>
-

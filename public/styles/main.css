@@ -1,5 +1,7 @@
 .card {
   min-width: 360px;
+  box-shadow: 5px 5px;
+
 }
 
 .card-content {
@@ -29,4 +31,10 @@
 
 body {
   background-color: #bcd8c1;
+}
+
+.page-title {
+  width: 100%;
+  font-family: 'Cinzel', serif;
+  font-size: bolder;
 }

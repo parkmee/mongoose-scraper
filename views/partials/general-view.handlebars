@@ -1,15 +1,13 @@
 <div class="col">
   <div class="card article-card blue-grey darken-1">
     <div class="card-content white-text">
-      <a class="btn-floating top-right"><i class="material-icons">add</i></a>
+      <a class="btn-floating top-right close-btn" data-id={{_id}}><i class="material-icons">close</i></a>
       <span class="card-title">{{title}}</span>
       <p>{{moment timestamp "LLL"}}</p>
     </div>
     <div class="card-action">
-      <a href={{link}}>LINK</a>
-      <a href="#" id="add-comment-link">COMMENT</a>
-      <a href="#" id="save-link">BOOKMARK</a>
-      <a href="#" id="delete-all-link">DELETE</a>
+      <a href={{link}} target="_blank">LINK</a>
+      <a href="#" class="bookmark-link" data-id={{_id}}>BOOKMARK</a>
     </div>
   </div>
 </div>

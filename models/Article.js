@@ -1,6 +1,5 @@
 // dependencies
 const mongoose = require("mongoose");
-const moment = require("moment");
 
 // save reference to Schema constructor
 const Schema = mongoose.Schema;
@@ -16,7 +15,11 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  saved: {
+  isSaved: {
+    type: Boolean,
+    default: false
+  },
+  isCleared: {
     type: Boolean,
     default: false
   },
