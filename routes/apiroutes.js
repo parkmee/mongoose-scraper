@@ -30,7 +30,6 @@ const getArticles = () => {
         db.Article.create(result)
           .then(dbArticle => {
             // view result in console
-            console.log("hi again");
             console.log(dbArticle);
             res.json(dbArticle);
           })
