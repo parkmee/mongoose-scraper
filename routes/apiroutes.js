@@ -47,6 +47,8 @@ module.exports = app => {
   // scrape articles
   app.get("/scrape", (req, res) => {
     getArticles();
+    location.reload();
+    console.log("scraped");
   });
 
   // put request to save article

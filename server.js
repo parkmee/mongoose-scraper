@@ -33,10 +33,12 @@ db.once("open", () =>{
 mongoose.Promise = global.Promise;
 
 // router
+// troubleshooting notes
 // heroku log says that - Error: Cannot find module './routes/htmlRoutes'
-require("./routes/htmlRoutes.js")(app);
-require("./routes/apiRoutes.js")(app);
-
+// changed routes to lowercase to be read by heroku
+// https://stackoverflow.com/questions/19341975/heroku-node-cannot-find-module-error
+require("./routes/htmlroutes.js")(app);
+require("./routes/apiroutes.js")(app);
 
 // start server
 app.listen(PORT, () => {
