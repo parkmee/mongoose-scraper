@@ -1,5 +1,6 @@
 // dependencies
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 // save reference to Schema constructor
 const Schema = mongoose.Schema;

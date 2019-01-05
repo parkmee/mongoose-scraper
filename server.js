@@ -8,8 +8,11 @@ const PORT = process.env.PORT || 8000;
 
 // handlebars
 const exphbs = require("express-handlebars");
+const MomentHandler = require("handlebars.moment");
+const Handlebars = require("handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+MomentHandler.registerHelpers(Handlebars);
 
 // middleware
 app.use(logger("dev"));
