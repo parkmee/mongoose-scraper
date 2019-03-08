@@ -39,6 +39,7 @@ mongoose.Promise = global.Promise;
 // https://stackoverflow.com/questions/19341975/heroku-node-cannot-find-module-error
 require("./routes/htmlroutes.js")(app);
 require("./routes/apiroutes.js")(app);
+//require("./routes/wordfrequency.js")(app);
 
 // start server
 app.listen(PORT, () => {

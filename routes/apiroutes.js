@@ -19,12 +19,12 @@ const getArticles = () => {
           .children(".card__headline__text")
           .text()
           .replace("\n", "");
-        result.link = "https://www.huffingtonpost.com" + $(this)
+        result.link = $(this)
           .children("div")
           .children("a")
           .attr("href");
 
-        //console.log(result);
+        console.log(result);
         
         // create new article with result object
         db.Article.create(result)
